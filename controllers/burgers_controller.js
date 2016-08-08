@@ -7,14 +7,14 @@ router.get('/', function(req,res) {
 });
 
 router.get('/burgers', function(req,res) {
-	burger.all(function(data){
+	burger.selectAll(function(data){
 		var hbsObject = {burgers : data}
 		res.render('index', hbsObject);
 	});
 });
 
 router.post('/burgers/create', function(req,res) {
-	burger.create(['burger_name'], [req.body.burger_name], function(data){
+	burger.insertOne(['burger_name'], [req.body.burger_name], function(data){
 		res.redirect('/burgers')
 	});
 });
@@ -24,7 +24,7 @@ router.put('/burgers/update/:id', function(req,res) {
 	console.log('condition', condition);
 
 	var setCol = 'devoured = ' + req.body.devoured;
-	burger.update(setCol, condition, function(data){
+	burger.updateOne(setCol, condition, function(data){
 		res.redirect('/burgers');
 	});
 });
